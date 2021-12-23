@@ -18,9 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/user', function () {
-    return view('admin.users.index');
-});
+// Route::get('/admin/user', function () {
+//     return view('admin.users.index');
+// });
 
 
 Route::get('/dashboard', function () {
@@ -39,6 +39,7 @@ Route::group(['namespace' => 'Admin',
             'prefix' => 'admin','as'=>'admin.',
             'middleware' => ['auth','admin']], function() {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::resource('user','UserController');
 });
 
 

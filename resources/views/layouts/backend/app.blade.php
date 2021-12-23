@@ -57,7 +57,7 @@
                     </li>
                     <h3 class="menu-title">CMS</h3><!-- /.menu-title -->
                     <li class="active">
-                        <a href="{{url('admin/user')}}"> <i class="menu-icon fa fa-user"></i>Users </a>
+                        <a href="{{route('admin.user.index')}}"> <i class="menu-icon fa fa-user"></i>Users </a>
                     </li>
 
                 </ul>
@@ -97,7 +97,17 @@
 
                             <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
 
-                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                            {{-- <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a> --}}
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+    
+                                <a class="nav-link" href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    <i class="fa fa-power-off"></i> Logout
+                                </a>
+                            </form>
                         </div>
                     </div>
 

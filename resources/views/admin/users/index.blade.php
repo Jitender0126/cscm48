@@ -46,36 +46,44 @@
                                 <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Name</th>
+                                            <th>Role</th>
                                             <th>User ID</th>
+                                            <th>Email</th>
                                             <th>Created at</th>
                                             <th>Updated at</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($users as $key=>$user)
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>$320,800</td>
+                                            <td>{{$key+1}}</td>
+                                            <td>{{$user->name}}</td>
+                                            <td>{{$user->role->name}}</td>
+                                            <td>{{$user->user_id}}</td>
+                                            <td>{{$user->email}}</td>
+                                            <td>{{$user->created_at}}</td>
+                                            <td>{{$user->updated_at}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#viewModal">
+                                                <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#viewModal-{{$user->id}}">
                                                     View
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                             
-                                                <button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#editModal">
+                                                <button type="button" class="btn btn-secondary mb-1" data-toggle="modal" data-target="#editModal-{{$user->id}}">
                                                     Edit
                                                     <i class="fa fa-wrench"></i>
                                                 </button>
                             
-                                                <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#deleteModal">
+                                                <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#deleteModal-{{$user->id}}">
                                                     Delete
                                                     <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                         
                                     </tbody>
                                 </table>
@@ -89,8 +97,10 @@
         </div><!-- .content -->
         <div class="animated">
 
+         @foreach ($users as $user)
+             
          
-            <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" data-backdrop="static" aria-hidden="true">
+            <div class="modal fade" id="viewModal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" data-backdrop="static" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -100,12 +110,45 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>
-                                There are three species of zebras: the plains zebra, the mountain zebra and the Grévy's zebra. The plains zebra
-                                and the mountain zebra belong to the subgenus Hippotigris, but Grévy's zebra is the sole species of subgenus
-                                Dolichohippus. The latter resembles an ass, to which it is closely related, while the former two are more
-                                horse-like. All three belong to the genus Equus, along with other living equids.
-                            </p>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label"> Name</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">{{$user->name}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">User ID</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">{{$user->user_id}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">Role</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">{{$user->role->name}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">Email</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">{{$user->email}}</p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">Created at</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">{{$user->created_at}}</p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label class=" form-control-label">Updated at</label></div>
+                                <div class="col-12 col-md-9">
+                                    <p class="form-control-static">{{$user->updated_at}}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             {{-- <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel <i class="fa fa-times"></button> --}}
@@ -117,7 +160,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"  data-backdrop="static" aria-hidden="true">
+            <div class="modal fade" id="editModal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"  data-backdrop="static" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -128,19 +171,21 @@
                         </div>
 
                         <div>
-                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <form action="{{route('admin.user.update',$user->id)}}" method="post" id="editUser-{{$user->id}}" enctype="multipart/form-data" class="form-horizontal">
+                                @csrf
+                                @method('PUT')
                             <div class="modal-body">
                             <div class="row form-group">
                                 <div class="col col-md-3"><label class=" form-control-label">User Name</label></div>
                                 <div class="col-12 col-md-9">
-                                    <p class="form-control-static">Username</p>
+                                    <p class="form-control-static">{{$user->name}}</p>
                                 </div>
                             </div>
 
                             <div class="row form-group">
                                 <div class="col col-md-3"><label class=" form-control-label">User ID</label></div>
                                 <div class="col-12 col-md-9">
-                                    <p class="form-control-static">Username</p>
+                                    <p class="form-control-static">{{$user->user_id}}</p>
                                 </div>
                             </div>
 
@@ -149,21 +194,18 @@
                                     <div class="col col-md-3"><label class=" form-control-label">Role</label></div>
                                     <div class="col col-md-9">
                                         <div class="form-check">
+
+                                            @foreach ($roles as $role)
+                                                
                                             <div class="radio">
                                                 <label for="radio1" class="form-check-label ">
-                                                    <input type="radio" id="radio1" name="radios" value="option1" class="form-check-input">Option 1
+                                                    <input type="radio" id="radio1" name="role" value="{{$role->id}}" 
+                                                    class="form-check-input" {{$user->role->id==$role->id ? 'checked':''}}>{{$role->name}}
                                                 </label>
                                             </div>
-                                            <div class="radio">
-                                                <label for="radio2" class="form-check-label ">
-                                                    <input type="radio" id="radio2" name="radios" value="option2" class="form-check-input">Option 2
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label for="radio3" class="form-check-label ">
-                                                    <input type="radio" id="radio3" name="radios" value="option3" class="form-check-input">Option 3
-                                                </label>
-                                            </div>
+
+                                            @endforeach
+
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +213,11 @@
                             <div class="modal-footer">
                                 
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel <i class="fa fa-times"> </i></button>
-                                <button type="Submit" class="btn btn-primary" >Confrim <i class="fa fa-check"></i></button>
+                                {{-- <button type="Submit" class="btn btn-primary" onclick="event.preventDefault(); --}}
+                                {{-- this.closest('form').submit();">Confrim <i class="fa fa-check"></i></button> --}}
+                                <button type="submit" class="btn btn-primary" onclick="event.preventDefault();
+                                 document.getElementById('editUser-{{$user->id}}').submit();">Confrim <i class="fa fa-check"></i></button> 
+
                             </div>
                             </form>
                         </div>
@@ -182,7 +228,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
+            <div class="modal fade" id="deleteModal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true" data-backdrop="static">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -200,13 +246,19 @@
                             {{-- <button type="button" class="btn btn-danger" class="fa fa-times" data-dismiss="modal">Cancel</button> --}}
                             {{-- <button type="button" class="btn btn-primary" class="fa fa-check">Confirm </button> --}}
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel <i class="fa fa-times"> </i></button>
-                            <button type="button" class="btn btn-primary" >Confrim <i class="fa fa-check"></i></button>
+                            <button type="button" class="btn btn-primary" onclick="event.preventDefault();
+                            document.getElementById('deleteUser-{{$user->id}}').submit();">Confrim <i class="fa fa-check"></i></button>
+                            <form action="{{route('admin.user.destroy',$user->id)}}" style="display:none" id="deleteUser-{{$user->id}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                            </form>
 
                         </div>
                     </div>
                 </div>
             </div>
-
+            @endforeach  
         </div>
     </div>
 

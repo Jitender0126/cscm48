@@ -9,8 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sufee Admin - HTML5 Admin Template</title>
-    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <title>Movie Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon" href="apple-icon.png">
@@ -27,7 +26,7 @@
     <link rel="stylesheet" href="{{asset('backend/assets/css/style.css')}}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
-
+@stack('header')
 </head>
 
 <body>
@@ -42,18 +41,23 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="./"><img src="{{asset('backend/images/logo.png')}}" alt="Logo"></a>
+                {{-- <a class="navbar-brand" href="./"><img src="{{asset('backend/images/logo.png')}}" alt="Logo"></a> --}}
+                <div>
+                    <p  class="menu-icon fa fa-film" class="col-sm-7">
+                        Movie Blog
+                    </p>
+                </div>
                 <a class="navbar-brand hidden" href="./"><img src="{{asset('backend/images/logo2.png')}}" alt="Logo"></a>
             </div>
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                        <a href="{{route('admin.dashboard')}}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <h3 class="menu-title">CMS</h3><!-- /.menu-title -->
                     <li class="active">
-                        <a href="index.html"> <i class="menu-icon fa fa-user"></i>Users </a>
+                        <a href="{{url('admin/user')}}"> <i class="menu-icon fa fa-user"></i>Users </a>
                     </li>
 
                 </ul>
@@ -140,7 +144,7 @@
             });
         })(jQuery);
     </script>
-
+@stack('footer')
 </body>
 
 </html>

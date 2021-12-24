@@ -39,7 +39,8 @@ Route::group(['namespace' => 'Admin',
             'prefix' => 'admin','as'=>'admin.',
             'middleware' => ['auth','admin']], function() {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-        Route::resource('user','UserController');
+        Route::resource('user','UserController')->except(['create','show','edit','store']);
+        Route::resource('category','CategoryController')->except(['create','show','edit']);
 });
 
 

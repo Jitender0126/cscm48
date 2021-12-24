@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('backend/vendors/selectFX/css/cs-skin-elastic.css')}}">
     <link rel="stylesheet" href="{{asset('backend/vendors/jqvmap/dist/jqvmap.min.css')}}">
 
+    
 
     <link rel="stylesheet" href="{{asset('backend/assets/css/style.css')}}">
 
@@ -30,7 +31,13 @@
 </head>
 
 <body>
-
+    <!-- Alertify -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
     <!-- Left Panel -->
 
@@ -61,6 +68,9 @@
                     </li>
                     <li class="active">
                         <a href="{{route('admin.category.index')}}"> <i class="menu-icon fa fa-file"></i>Category </a>
+                    </li>
+                    <li class="active">
+                        <a href="{{route('admin.post.index')}}"> <i class="menu-icon fa  fa-envelope-o"></i>Posts </a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -138,6 +148,11 @@
     <script src="{{asset('backend/vendors/jqvmap/dist/jquery.vmap.min.js')}}"></script>
     <script src="{{asset('backend/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')}}"></script>
     <script src="{{asset('backend/vendors/jqvmap/dist/maps/jquery.vmap.world.js')}}"></script>
+
+
+    <!-- Alertify -->
+    
+    
     <script>
         (function($) {
             "use strict";

@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories= Category::all();
-        return view('admin.category.index',compact('categories'));
+        $posts=Post::latest()->get();
+        return view('admin.post.index',compact('posts'));
     }
 
     /**
@@ -26,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categories=Category::all();
+        return view('admin.post.create',compact('categories'));
     }
 
     /**
@@ -38,19 +40,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'=>'required|max:255|unique:categories',
-            'description'=>'sometimes|max:2000'
-        ]);
-
-        $category=new Category();
-        $category->name=$request->name;
-        $category->slug=$request->slug;
-        $category->description=$request->description;
-        $category->image='default.jpg';
-
-        $category->save();
-
-        return redirect()->back();
+            'title'=>'requied|max:355|unique:posts',
+            'category'=>'required',
+            'tags'=>'tags',
+            'body'=>'body'
+        ]
+        );
     }
 
     /**
@@ -84,20 +79,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name'=>'required|max:255',
-            'description'=>'sometimes|max:2000'
-        ]);
-
-        $category= Category::findOrFail($id);
-        $category->name=$request->name;
-        $category->slug=$request->slug;
-        $category->description=$request->description;
-        $category->image='default.jpg';
-
-        $category->save();
-
-        return redirect()->back();
+        //
     }
 
     /**
@@ -108,8 +90,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return redirect()->back();
+        //
     }
 }

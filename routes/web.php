@@ -41,6 +41,7 @@ Route::group(['namespace' => 'Admin',
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
         Route::resource('user','UserController')->except(['create','show','edit','store']);
         Route::resource('category','CategoryController')->except(['create','show','edit']);
+        Route::resource('post','PostController');
 });
 
 

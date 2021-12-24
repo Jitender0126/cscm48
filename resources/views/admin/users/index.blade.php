@@ -30,13 +30,34 @@
                         </ol>
                     </div>
                 </div>
+                
             </div>
+            
         </div>
-
+        
+        
         <div class="content mt-3">
             <div class="animated fadeIn">
                 <div class="row">
+                    {{-- <div class="col-md-12"> --}}
+                        <div class="col-sm-12">
 
+                            @if ($errors->any())
+                            
+                                    @foreach ($errors->all() as $error)
+                                    <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+                                        <span class="badge badge-pill badge-danger">Error</span> {{$error}}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    @endforeach
+                                
+                             @endif
+
+                            
+                        </div>
+                    {{-- </div> --}}
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
@@ -110,43 +131,50 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label class=" form-control-label"> Name</label></div>
-                                <div class="col-12 col-md-9">
-                                    <p class="form-control-static">{{$user->name}}</p>
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label"> Name</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <p class="form-control-static">{{$user->name}}</p>
+                                        </div>
+                                    </div>
+        
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">User ID</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <p class="form-control-static">{{$user->user_id}}</p>
+                                        </div>
+                                    </div>
+        
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Role</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <p class="form-control-static">{{$user->role->name}}</p>
+                                        </div>
+                                    </div>
+        
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Email</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <p class="form-control-static">{{$user->email}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Created at</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <p class="form-control-static">{{$user->created_at}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-3"><label class=" form-control-label">Updated at</label></div>
+                                        <div class="col-12 col-md-9">
+                                            <p class="form-control-static">{{$user->updated_at}}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label class=" form-control-label">User ID</label></div>
-                                <div class="col-12 col-md-9">
-                                    <p class="form-control-static">{{$user->user_id}}</p>
-                                </div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label class=" form-control-label">Role</label></div>
-                                <div class="col-12 col-md-9">
-                                    <p class="form-control-static">{{$user->role->name}}</p>
-                                </div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label class=" form-control-label">Email</label></div>
-                                <div class="col-12 col-md-9">
-                                    <p class="form-control-static">{{$user->email}}</p>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label class=" form-control-label">Created at</label></div>
-                                <div class="col-12 col-md-9">
-                                    <p class="form-control-static">{{$user->created_at}}</p>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label class=" form-control-label">Updated at</label></div>
-                                <div class="col-12 col-md-9">
-                                    <p class="form-control-static">{{$user->updated_at}}</p>
+                                <div class=col-sm-3>
+                                    <img src="{{asset('images/'.$user->image)}}" alt="{{asset('images/default.jpg')}}">
                                 </div>
                             </div>
                         </div>
@@ -210,6 +238,12 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="file-input" class=" form-control-label">User Image</label></div>
+                                <div class="col-12 col-md-9"><input type="file" id="file-input" name="image" class="form-control-file"></div>
+                            </div>
+
                             <div class="modal-footer">
                                 
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel <i class="fa fa-times"> </i></button>
@@ -221,7 +255,6 @@
                             </div>
                             </form>
                         </div>
-
                         
                         
                     </div>

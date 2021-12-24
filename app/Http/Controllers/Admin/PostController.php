@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class PostController extends Controller
 {
@@ -39,14 +41,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request,[
-            'title'=>'requied|max:355|unique:posts',
-            'category'=>'required',
-            'tags'=>'tags',
-            'body'=>'body'
-        ]
-        );
+            'title'=>'required|max:355|unique:posts',
+            // 'category'=>'required',
+            'tags'=>'required',
+            'body'=>'required'
+        ]);
+
+        $post=new Post();
+        $post->title=$request->title;
+        $post->user_id=Auth::id();
+        $post->category_id=$request->category;
+        $post->tags=$request->tags;
+        $post->body=$request->body;
+        $post->save();
+
+        return redirect()->route('admin.post.index');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -56,7 +70,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('admin.post.show', compact('post'));
     }
 
     /**
@@ -67,7 +82,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $categories = Category::all();
+        return view('admin.post.edit', compact('post', 'categories'));
     }
 
     /**
@@ -79,7 +96,31 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->title == Post::findOrFail($id)->title) {
+            $this->validate($request, [
+                'title' => 'required|max:255', 
+                'category' => 'required',
+                'tags' => 'required',
+                'body' => 'required',
+            ]);
+        }
+        else {
+            $this->validate($request, [
+                'title' => 'required|max:255|unique:posts', 
+                'category' => 'required',
+                'tags' => 'required',
+                'body' => 'required',
+            ]);
+        }
+
+        $post = Post::findOrFail($id);
+        $post->user_id = Auth::id();
+        $post->category_id = $request->category;
+        $post->title = $request->title;
+        $post->tags = $request->tags;
+        $post->body = $request->body;
+        $post->save();
+        return redirect()->route('admin.post.index');
     }
 
     /**
@@ -90,6 +131,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrfail($id);
+        $post->delete();
+        return redirect()->route('admin.post.index');
     }
 }

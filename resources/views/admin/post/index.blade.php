@@ -73,22 +73,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($posts as $key=>$post)
+                                        @foreach ($posts as $key => $post)
                                         <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>{{$post->name}}</td>
-                                            <td>{{$post->slug}}</td>
+                                            <td>{{$post->title}}</td>
+                                            <td>{{$post->user->name}}</td>
+                                            {{-- <td><a href="{{route('admin.post.like.users', $post->id)}}" class="btn btn-danger" type="button"> <i class="fa fa-heart"></i> {{$post->likedUsers->count()}}</a> <button class="btn btn-info" type="button"><i class="fa fa-eye"></i> {{$post->view_count}}</button></td> --}}
                                             <td>{{$post->created_at}}</td>
                                             <td>{{$post->updated_at}}</td>
                                             <td>
-                                        
-                                                <a href="{{route('admin.post.show',$post->id)}}" class="btn btn-info"><i class="fa fa-eye"></a>
-                                                <a href="{{route('admin.post.show',$post->id)}}" class="btn btn-success"><i class="fa fa-wrench"></a>
-                                                <a href="{{route('admin.post.show',$post->id)}}" class="btn btn-info"><i class="fa fa-eye"></a>
-                                                                            
-                                                <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#deleteModal-{{$category->id}}">
-                                                    Delete
-                                                    <i class="fa fa-trash-o"></i>
+                                                <!-- Button trigger modal -->
+                                                
+                                                <a href="{{route('admin.post.show', $post->id)}}" class="btn btn-primary">View <i class="fa fa-eye"></i></a>
+                                                <a href="{{route('admin.post.edit', $post->id)}}" class="btn btn-secondary">Edit  <i class="fa fa-wrench"></i></a>
+
+                                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#deleteModal-{{$post->id}}">Delete <i class="fa fa-trash-o"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -122,19 +122,19 @@
                                 This Post will be deleted !
                                 </p>
                             </div>
+
                             <div class="modal-footer">
-                                {{-- <button type="button" class="btn btn-danger" class="fa fa-times" data-dismiss="modal">Cancel</button>  --}}
-                                {{-- <button type="button" class="btn btn-primary" class="fa fa-check">Confirm </button>  --}}
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel <i class="fa fa-times"> </i></button> 
-                                <button type="button" class="btn btn-primary" onclick="event.preventDefault();
-                                document.getElementById('deletePost-{{$post->id}}').submit();">Confrim <i class="fa fa-check"></i></button>
-                                <form action="{{route('admin.post.destroy',$post->id)}}" style="display:none" id="deletePost-{{$post->id}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-
-                                </form>
-
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" onclick="event.preventDefault();
+                                document.getElementById('deletepost-{{$post->id}}').submit();">Confirm</button>
+                            <form action="{{route('admin.post.destroy', $post->id)}}" style="display: none" id="deletepost-{{$post->id}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                             </div>
+
+
+                            
                         </div>
                     </div> 
                 </div> 

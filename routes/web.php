@@ -34,11 +34,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::post('/comment/{post}','CommentController@store')->name('comment.store');
 
 Route::group(['namespace' => 'Admin', 
             'prefix' => 'admin','as'=>'admin.',
             'middleware' => ['auth','admin']], function() {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('profile', 'DashboardController@showprofile')->name('profile');
         Route::resource('user','UserController')->except(['create','show','edit','store']);
         Route::resource('category','CategoryController')->except(['create','show','edit']);
         Route::resource('post','PostController');
@@ -49,5 +51,7 @@ Route::group(['namespace' => 'User',
             'prefix' => 'user','as'=>'user.',
             'middleware' => ['auth','user']], function() {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+        Route::resource('post','PostController');
+        Route::resource('category','CategoryController')->except(['create','show','edit']);
 });
 

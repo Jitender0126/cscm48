@@ -1,17 +1,85 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.backendUser.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in as {{Auth::user()->name}}
-                </div>
+@section('content')
+    <div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Welcome {{Auth::user()->name}}</h1>
             </div>
         </div>
     </div>
-</x-app-layout>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Dashboard </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- @foreach ($Posts ?? '' as $post) --}}
+    
+
+        <div class="content mt-3">
+
+         <div class="col-sm-8">
+            <div class="card">
+            <div class="card-header">
+                <h4>Categories</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted m-b-15">Below are the list of Categories availabe for reading and discussion on this blog !</p>
+                <p>Please click the specific category you want to see the posts on !</p>
+                <ul class="list-unstyled">
+                @foreach ($categories as $category)
+                
+                    <li><a href="#">{{$category->name}}</a></li>
+
+                
+                @endforeach
+            </ul>
+            </div>
+        </div>
+        </div>
+
+    {{-- @endforeach --}}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Recent Posts</strong>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($posts  as $key=>$post)
+                        <tr>
+                            <td>{{$key+1}}</td>
+                            <td>{{$post->title}}</td>
+                            <td>{{$post->user->name}}</td>
+                            <td>{{$post->category->name}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    
+
+
+</div> <!-- .content -->
+
+@endsection

@@ -31,20 +31,21 @@
 
                         
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-lg-12">
                         <div class="card">
                             
                             <div class="card-header">
-                                <strong class="card-title">Create Post</strong>
+                                <strong class="card-title">Edit Post</strong>
                                 {{-- <a href="{{route('admin.post.create')}}" class="btn  btn-primary"><i class="fa fa-plus"></i></a>   --}}
                             </div>
                             <div class="card-body">
                                 
-                                    <form action="{{route('admin.post.store')}}" method='post' enctype="multipart/form-data" class="form-horizontal">
+                                    <form action="{{route('admin.post.update',$post->id)}}" method='post' enctype="multipart/form-data" class="form-horizontal">
                                     @csrf
-                                        <div class="row form-group" >
-                                            <div class="col col-md-3"><label for="title" class=" form-control-label">Text Input</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" id="title" name="title" placeholder="Post Title" class="form-control">
+                                    @method('PUT')
+                                        <div class="row form-group">
+                                            <div class="col col-md-3"><label for="title" class=" form-control-label">Title</label></div>
+                                            <div class="col-12 col-md-9"><input type="text" id="title" name="title" value="{{$post->title}}" placeholder="Post Title" class="form-control">
                                                 
         
                                             </div>
@@ -55,7 +56,8 @@
                                             <div class="col-12 col-md-9">
                                                 <select name="category" id="select" class="form-control">
                                                     @foreach ($categories as $category)
-                                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                                        <option value="{{$category->id}}" 
+                                                            {{$post->category->id == $category->id ? "selected" : ""}}>{{$category->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -63,7 +65,7 @@
         
                                         <div class="row form-group">
                                             <div class="col col-md-3"><label for="title" class=" form-control-label">Tags</label></div>
-                                            <div class="col-12 col-md-9"><input type="text" id="title" name="tags" placeholder="Tag(separated by comma)" class="form-control">
+                                            <div class="col-12 col-md-9"><input type="text" id="title" value="{{$post->tags}}" name="tags" placeholder="Tag(separated by comma)" class="form-control">
                                                 
         
                                             </div>
@@ -72,7 +74,7 @@
                                         <div class="row form-group" >
                                             <div class="col">
                                             <label for="textarea-input" class=" form-control-label">Body</label>
-                                            <textarea name="body" id="textarea-input" rows="9" placeholder="Content..." class="form-control"></textarea>
+                                            <textarea name="body" id="textarea-input" rows="9" value="{{$post->body}}" placeholder="Content..." class="form-control">{{$post->body}}</textarea>
                                             </div>
                                         </div>
         

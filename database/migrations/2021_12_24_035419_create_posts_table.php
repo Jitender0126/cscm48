@@ -18,8 +18,9 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
             $table->string('title')->unique();
+            $table->string('tags')->notnull();
             $table->text('body');
-            $table->integer('view_count');
+            $table->integer('view_count')->default(0);
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

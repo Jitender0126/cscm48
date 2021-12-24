@@ -13,7 +13,7 @@
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
-                    <li class="active">Dashboard</li>
+                    <li class="active">Welcome {{Auth::user()->name}} this is user</li>
                 </ol>
             </div>
         </div>
